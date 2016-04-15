@@ -1,4 +1,4 @@
-package org.dissect.rdf.spark.model
+package net.sansa.rdf.flink.model
 
 import java.io.InputStream
 import com.hp.hpl.jena.rdf.model._

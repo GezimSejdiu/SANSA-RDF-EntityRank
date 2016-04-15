@@ -1,4 +1,4 @@
-package org.dissect.rdf.flink.utils
+package net.sansa.rdf.flink.utils
 import org.slf4j.LoggerFactory
 
 trait Logging {
