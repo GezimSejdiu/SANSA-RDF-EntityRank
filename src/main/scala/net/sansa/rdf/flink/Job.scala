@@ -18,7 +18,7 @@ object Job extends Logging {
     // set up the execution environment
     val env = ExecutionEnvironment.getExecutionEnvironment
 
-    logger.info("Runing RDF-Statistics....")
+    logger.info("start loading triples.....")
     val startTime = System.currentTimeMillis()
 
     val triples = TripleReader.loadFromFile(input, env)
