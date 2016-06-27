@@ -1,8 +1,8 @@
-package net.sansa.rdf.flink.io
+package net.sansa.entityrank.flink.io
 
-import net.sansa.rdf.flink.utils.Logging
 import org.apache.flink.api.scala._
-import net.sansa.rdf.flink.model.Triples
+import net.sansa.entityrank.flink.utils.Logging
+import net.sansa.entityrank.flink.model.Triples
 
 /**
  * Writes triples to disk.

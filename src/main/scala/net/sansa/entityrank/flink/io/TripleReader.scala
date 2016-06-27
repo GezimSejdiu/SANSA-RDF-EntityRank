@@ -1,14 +1,13 @@
-package net.sansa.rdf.flink.io
+package net.sansa.entityrank.flink.io
 
-import org.openjena.riot.RiotReader
-import org.openjena.riot.Lang
 import java.io.InputStream
-import net.sansa.rdf.flink.utils.Logging
 import org.apache.flink.api.scala.ExecutionEnvironment
 import org.apache.flink.api.scala.DataSet
-import net.sansa.rdf.flink.model.Triples
 import org.apache.flink.api.scala._
-
+import net.sansa.entityrank.flink.utils.Logging
+import net.sansa.entityrank.flink.model.Triples
+import org.openjena.riot.RiotReader
+import org.openjena.riot.Lang
 /**
  * Reads triples.
  *
@@ -27,6 +26,22 @@ object TripleReader extends Logging {
       env.readTextFile(path)
         .filter(line => !line.trim().isEmpty & !line.startsWith("#"))
         .map(f => parseTriples(path))
+    triples
+  }
+
+  def loadSFromFile(path: String, env: ExecutionEnvironment): DataSet[(String, String, String)] = {
+    logger.info("loading triples from disk...")
+    val startTime = System.currentTimeMillis()
+
+    val tr =
+      env.readTextFile(path)
+        .filter(line => !line.trim().isEmpty & !line.startsWith("#"))
+
+    val triples = tr
+      .map(line => line.replace(">", "").replace("<", "").split("\\s+")) // line to tokens
+      .map(triple => (triple(0), triple(1), triple(2))) // tokens to triple
+
+    logger.info("finished loading " + triples.count() + " triples in " + (System.currentTimeMillis() - startTime) + "ms.")
     triples
   }
 }

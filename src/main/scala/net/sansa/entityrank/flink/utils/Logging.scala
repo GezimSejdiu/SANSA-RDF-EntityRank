@@ -1,4 +1,5 @@
-package net.sansa.rdf.flink.utils
+package net.sansa.entityrank.flink.utils
+
 import org.slf4j.LoggerFactory
 
 trait Logging {

@@ -1,7 +1,8 @@
-package net.sansa.rdf.flink.model
+package net.sansa.entityrank.flink.model
 
 import com.hp.hpl.jena.graph.{ Triple => JTriple }
 import com.hp.hpl.jena.graph.{ Node => JNode }
+
 
 /**
  * A data structure for a set of triples.
