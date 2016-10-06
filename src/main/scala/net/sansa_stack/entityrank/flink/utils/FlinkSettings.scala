@@ -1,7 +1,7 @@
-package net.sansa.entityrank.flink.utils
+package net.sansa_stack.entityrank.flink.utils
 import org.slf4j.LoggerFactory
 
-object Settings {
+object FlinkSettings {
 
   /**
    * Set all loggers to the given log level.  Returns a map of the value of every logger
@@ -20,4 +20,5 @@ object Settings {
       }.toMap
     }
 
+      //setLogLevels(org.apache.log4j.Level.WARN, Seq("org.apache", "flink", "org.eclipse.jetty", "akka"))
 }

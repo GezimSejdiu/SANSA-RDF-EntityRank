@@ -1,7 +1,7 @@
-package net.sansa.entityrank.flink.feature
+package net.sansa_stack.entityrank.flink.feature
 import org.apache.flink.ml.math
 import scala.collection.mutable
-import net.sansa.entityrank.flink.utils.Utils
+import net.sansa_stack.entityrank.flink.utils.Utils
 import org.apache.flink.api.scala.DataSet
 import scala.math.log
 import scala.util.hashing.MurmurHash3
@@ -41,7 +41,8 @@ class HashingTrick(val numFeatures: Int) extends Serializable {
     hashAlgorithm = value
     this
   }
-
+  
+  
   /**
    * Returns the index of the input term.
    */
@@ -72,31 +73,14 @@ class HashingTrick(val numFeatures: Int) extends Serializable {
     }
     Vectors.sparse(numFeatures, termFrequencies.toSeq)
   }
-  
-  
-  
 
   /**
    * Transforms the input document to term frequency vectors.
    */
-  /*  def transform[D <: Iterable[_]](dataset: DataSet[D]): DataSet[Vector] = {
-    dataset.map(this.transform)
-    }
-    
-    */
-
-  // def dd(dataset: DataSet[Vector]) = transform(dataset.collect.toIndexedSeq)
-  /*  def transform(dataset: DataSet[Vector]): DataSet[Vector] = {
-    dataset.map(x => 
-      x match {
-        case x:Vector => this.transform(x)
-    })
-  }*/
-
   /*  def transform[D: ClassTag: TypeInformation](dataset: DataSet[D]): DataSet[Vector] = {
     dataset.map(r => this.transform(r))
   }
-*/
+  */
 
   def genericMap[T: ClassTag: TypeInformation](dataset: DataSet[T]): DataSet[T] = {
     dataset.map(r => r)

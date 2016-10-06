@@ -1,14 +1,13 @@
-package net.sansa.entityrank.flink
+package net.sansa_stack.entityrank.flink
 
 import org.apache.flink.api.scala._
 import org.apache.flink.api.java.utils.ParameterTool
 import java.util.Properties
-import net.sansa.entityrank.flink.utils.Logging
-import net.sansa.entityrank.flink.io.TripleReader
-import net.sansa.entityrank.flink.io.StringInputStream
-import net.sansa.entityrank.flink.utils.FlinkSettings
-import net.sansa.entityrank.flink.feature.HashingTrick
+import net.sansa_stack.entityrank.flink.utils.{Logging, FlinkSettings}
+import net.sansa_stack.entityrank.flink.io.{TripleReader,StringInputStream}
+import net.sansa_stack.entityrank.flink.feature.HashingTrick
 import org.apache.flink.ml.math.Vector
+import net.sansa_stack.entityrank.flink.feature._
 
 object Job extends Logging {
   def main(args: Array[String]) {
@@ -25,19 +24,29 @@ object Job extends Logging {
     logger.info("Runing RDF-EntityRank....")
     val startTime = System.currentTimeMillis()
 
+    //val triples = TripleReader.loadFromFile("hdfs://akswnc5.informatik.uni-leipzig.de:54310/gsejdiu/DistLODStats/BSBM/BSBM_2GB.nt", env)
+   
     val fn = "/opt/spark-1.5.1/nyseSimpl_copy.nt"
     //val fn = "/opt/spark/data/tests/page_links_simple.nt"
 
     val triples = TripleReader.loadSFromFile(fn, env)
 
-
     val vtriples = triples.map(t => t.toString.split(",").toIterable)
-
+    
+    
     val hashTF = new HashingTrick()
     //Transforms the input document to term frequency vectors.
     val tf: DataSet[Vector] = vtriples.map(f => (hashTF.transform(f)))
-
+    
+    // Fit the model to the data.
+    val idf = new IDF().fit(tf)
+    val tfidf: DataSet[Vector] = idf.transform(tf)
+    
+    val ddd = new TFIDF
+    ddd.fit(tf)
+    
     tf.collect.take(3).foreach(println(_))
+    tf.print
 
     println("finished loading " + triples.count() + " triples in " + (System.currentTimeMillis() - startTime) + "ms.")
 

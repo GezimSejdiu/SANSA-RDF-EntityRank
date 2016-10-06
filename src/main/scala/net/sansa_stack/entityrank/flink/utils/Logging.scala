@@ -1,4 +1,4 @@
-package net.sansa.entityrank.flink.utils
+package net.sansa_stack.entityrank.flink.utils
 
 import org.slf4j.LoggerFactory
 

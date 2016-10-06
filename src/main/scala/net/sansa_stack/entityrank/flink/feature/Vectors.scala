@@ -1,4 +1,4 @@
-package net.sansa.entityrank.flink.feature
+package net.sansa_stack.entityrank.flink.feature
 
 import org.apache.flink.ml.math.SparseVector
 import org.apache.flink.ml.math.Vector
