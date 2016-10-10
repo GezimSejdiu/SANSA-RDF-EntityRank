@@ -15,5 +15,6 @@ buildNumber.properties
 .cashe
 .cache-main
 .cache-tests
-.classpath
 /bin
+/.idea/
+/Flink-RDF-EntityRank.iml
