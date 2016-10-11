@@ -30,7 +30,7 @@ To run the application on a standalone Flink cluster
   ```
 cd /path/to/flink/installation
 ./bin/flink run -c \
-		net.sansa_stacak.entityrank.flink.Job \
+		net.sansa_stack.entityrank.flink.Job \
 		/path/to/program/jarfile -arg1 -arg2 ... 
   ```
 
