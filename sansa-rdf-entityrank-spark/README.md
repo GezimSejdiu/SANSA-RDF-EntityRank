@@ -1,11 +1,11 @@
-# Spark-RDF-Statistics
-RDF-Statistics Spark Library.
+# Spark-RDF-EntityRank
+RDF-EntityRank Spark Library.
 
 ## Description
-RDF-Statistics Spark Library.
+Spark RDF-EntityRank computes the term-frequency/inverse document frequency for the given RDF datasets.
 
 ## Spark-RDF main application class
-The main application class is `org.sansa.rdfstatistics.spark.App`.
+The main application class is `net.sansa_stack.entityrank.spark.App`.
 The application requires as application arguments:
 
 1. path to the input folder containing the RDF data as nt (e.g. `/data/input`)
@@ -29,8 +29,8 @@ To run the application on a standalone Spark cluster
 
   ```
   spark-submit \
-		--class org.sansa.rdfstatistics.spark.App \
+		--class net.sansa_stack.entityrank.spark.App \
 		--master spark://spark-master:7077 \
  		C/app/application.jar \
-		Cocktails /data/input /data/output  
+		/data/input /data/output  
   ```
