@@ -1,4 +1,4 @@
-package net.sansa.entityrank.spark
+package net.sansa_stack.entityrank.spark
 
 import scala.io.Source
 import java.io.File
@@ -17,9 +17,9 @@ import org.omg.PortableInterceptor.SYSTEM_EXCEPTION
 import org.openjena.riot.RiotReader
 import org.openjena.riot.Lang
 import org.apache.spark.storage.StorageLevel
-import net.sansa.entityrank.spark.utils._
-import net.sansa.entityrank.spark.io.TripleReader
-import net.sansa.entityrank.spark.model.EntityRank
+import net.sansa_stack.entityrank.spark.utils._
+import net.sansa_stack.entityrank.spark.io.TripleReader
+import net.sansa_stack.entityrank.spark.model.EntityRank
 import scopt.OptionParser
 import org.apache.spark.mllib.linalg.Vector
 import org.apache.spark.sql.SQLContext

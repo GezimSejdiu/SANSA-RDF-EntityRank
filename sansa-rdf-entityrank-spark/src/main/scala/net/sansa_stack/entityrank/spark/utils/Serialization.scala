@@ -1,9 +1,9 @@
-package net.sansa.entityrank.spark.utils
+package net.sansa_stack.entityrank.spark.utils
 
 import org.apache.spark.serializer.{ KryoRegistrator => SparkKryoRegistrator }
 import com.esotericsoftware.kryo.Kryo
-import net.sansa.entityrank.spark.model.EntityRank
-import net.sansa.entityrank.spark.model.Triples
+import net.sansa_stack.entityrank.spark.model.EntityRank
+import net.sansa_stack.entityrank.spark.model.Triples
 /*
  * Class for serialization by the Kryo serializer.
  */

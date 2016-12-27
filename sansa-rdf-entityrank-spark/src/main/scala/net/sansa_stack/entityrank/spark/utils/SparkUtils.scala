@@ -1,4 +1,4 @@
-package net.sansa.entityrank.spark.utils
+package net.sansa_stack.entityrank.spark.utils
 
 import org.apache.spark.SparkConf
 import org.apache.spark.SparkContext

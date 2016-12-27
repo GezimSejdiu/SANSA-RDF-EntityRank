@@ -1,12 +1,12 @@
-package net.sansa.entityrank.spark.io
+package net.sansa_stack.entityrank.spark.io
 
 import org.openjena.riot.RiotReader
 import org.openjena.riot.Lang
 import org.apache.spark.SparkContext
 import java.io.InputStream
 import org.apache.spark.rdd.RDD
-import net.sansa.entityrank.spark.utils.Logging
-import net.sansa.entityrank.spark.model.Triples
+import net.sansa_stack.entityrank.spark.utils.Logging
+import net.sansa_stack.entityrank.spark.model.Triples
 
 /**
  * Reads triples.

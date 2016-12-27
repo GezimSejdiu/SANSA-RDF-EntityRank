@@ -1,8 +1,8 @@
-package net.sansa.entityrank.spark.io
+package net.sansa_stack.entityrank.spark.io
 
 import org.apache.spark.rdd.RDD
-import net.sansa.entityrank.spark.utils.Logging
-import net.sansa.entityrank.spark.model.Triples
+import net.sansa_stack.entityrank.spark.utils.Logging
+import net.sansa_stack.entityrank.spark.model.Triples
 
 /**
  * Writes triples to disk.

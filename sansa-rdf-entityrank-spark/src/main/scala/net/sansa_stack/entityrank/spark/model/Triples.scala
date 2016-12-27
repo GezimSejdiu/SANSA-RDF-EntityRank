@@ -1,4 +1,4 @@
-package net.sansa.entityrank.spark.model
+package net.sansa_stack.entityrank.spark.model
 
 import com.hp.hpl.jena.graph.{ Triple => JTriple }
 import com.hp.hpl.jena.graph.{ Node => JNode }
