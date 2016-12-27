@@ -25,6 +25,33 @@
 			<id>Akka repository</id>
 			<url>http://repo.akka.io/releases</url>
 		</repository>
+		<repository>
+			<id>oss-sonatype</id>
+			<name>oss-sonatype</name>
+			<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>apache-snapshot</id>
+			<name>Apache repository (snapshots)</name>
+			<url>https://repository.apache.org/content/repositories/snapshots/</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>maven.aksw.snapshots</id>
+			<name>AKSW Snapshot Repository</name>
+			<url>http://maven.aksw.org/archiva/repository/snapshots</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
 	</repositories>
 
 	<dependencies>
@@ -35,7 +62,7 @@
 			<version>${org.slf4j-version}</version>
 		</dependency>
 
-			<dependency>
+		<dependency>
 			<groupId>org.apache.spark</groupId>
 			<artifactId>spark-graphx_${scala.compat.version}</artifactId>
 			<version>${spark.version}</version>
@@ -51,8 +78,8 @@
 			<artifactId>spark-sql_${scala.compat.version}</artifactId>
 			<version>${spark.version}</version>
 		</dependency>
-		
-<dependency>
+
+		<dependency>
 			<groupId>org.apache.spark</groupId>
 			<artifactId>spark-mllib_${scala.compat.version}</artifactId>
 			<version>${spark.version}</version>
@@ -104,6 +131,12 @@
 			<version>3.2.0</version>
 		</dependency>
 
+		<!-- SANSA RDF -->
+		<!-- <dependency>
+			<groupId>net.sansa-stack</groupId>
+			<artifactId>sansa-rdf-spark-bundle</artifactId>
+			<version>0.1.0</version>
+		</dependency> -->
 
 	</dependencies>
 

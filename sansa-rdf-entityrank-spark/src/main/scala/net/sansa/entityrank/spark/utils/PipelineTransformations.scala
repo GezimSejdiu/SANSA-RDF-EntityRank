@@ -7,6 +7,7 @@ import org.apache.spark.sql.DataFrame
 import org.apache.spark.SparkContext
 import org.apache.spark.sql.DataFrame
 import org.apache.spark.sql.functions._
+import org.apache.spark.sql.SparkSession
 
 /*
  * Gezim Sejdiu
@@ -14,7 +15,7 @@ import org.apache.spark.sql.functions._
  */
 object PipelineTransformations {
 
-  def transfromEntities(df: DataFrame, colName: String, n_gramConst: Int = 3, numTextFeatures: Int = 1000)(implicit config: SparkContext): DataFrame = {
+  def transfromEntities(df: DataFrame, colName: String, n_gramConst: Int = 3, numTextFeatures: Int = 1000)(implicit config: SparkSession): DataFrame = {
 
     val n_gram = new NGram().setN(n_gramConst).setInputCol("words").setOutputCol("ngrams")
     val hashTF = new HashingTF().setInputCol("ngrams").setOutputCol("rowFeatures").setNumFeatures(numTextFeatures)
