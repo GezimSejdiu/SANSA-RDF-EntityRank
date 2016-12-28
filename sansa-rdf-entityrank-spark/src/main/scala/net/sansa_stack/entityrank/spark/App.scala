@@ -28,6 +28,8 @@ import org.apache.spark.mllib.feature.HashingTF
 import org.apache.spark.mllib.stat.{ MultivariateStatisticalSummary, Statistics }
 import org.apache.spark.ml.feature.Word2Vec
 import org.apache.spark.sql.SparkSession
+import net.sansa_stack.entityrank.spark.model.TriplesRDD
+import org.apache.log4j.{Level,LogManager}
 
 object App extends Logging {
 
@@ -40,6 +42,8 @@ object App extends Logging {
     }
 
     val input = args(0)
+    
+    LogManager.getRootLogger().setLevel(Level.WARN)
 
     val sparkSession = SparkSession.builder
       .master("local[*]")
@@ -52,7 +56,12 @@ object App extends Logging {
     logger.info("Runing SANSA RDF-EntityRank....")
     val startTime = System.currentTimeMillis()
 
-    val triples = TripleReader.loadSFromFile(input, sparkSession.sparkContext, 2) //.toDF("Subject", "Predicate", "Object")
+    val triples = TripleReader.loadFromFile(input, sparkSession.sparkContext, 2) //.toDF("Subject", "Predicate", "Object")
+
+    val triplesRDD = TripleReader.loadFromFile(input, sparkSession.sparkContext)
+    val jpinPair = triplesRDD.typeJoin
+    jpinPair.collect.take(3).foreach(println(_))
+
     triples.take(5).foreach(println(_))
     val vtriples = triples.map(t => t.toString.split(",").toSeq)
 
@@ -74,7 +83,6 @@ object App extends Logging {
 
     //val DFtriples = triples.toDF("words")
     val s = vtriples.map(Tuple1.apply).toDF("words")
-
 
     val documentDF = vtriples.toDF("words")
 

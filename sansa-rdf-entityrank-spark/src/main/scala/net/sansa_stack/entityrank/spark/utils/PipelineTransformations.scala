@@ -33,7 +33,7 @@ object PipelineTransformations {
     val tokenizer = new RegexTokenizer().setInputCol(inputColName).setOutputCol("words").setPattern("\\w+").setGaps(false)
     val remover = new StopWordsRemover().setInputCol("words").setOutputCol(outputColName)
 
-    // map the transformations onto the data
+    // map the transformations into the data
     val wordsData = tokenizer.transform(df)
 
     remover.transform(wordsData).drop("words")
