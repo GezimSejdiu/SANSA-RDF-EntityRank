@@ -7,6 +7,8 @@ import java.io.InputStream
 import org.apache.spark.rdd.RDD
 import net.sansa_stack.entityrank.spark.utils.Logging
 import net.sansa_stack.entityrank.spark.model.Triples
+import net.sansa_stack.entityrank.spark.model.TriplesRDD
+import java.io.ByteArrayInputStream
 
 /**
  * Reads triples.
@@ -28,6 +30,16 @@ object TripleReader extends Logging {
         .filter(line => !line.trim().isEmpty & !line.startsWith("#"))
         .map(parseTriples)
     triples
+  }
+
+  def loadFromFile(path: String, sc: SparkContext): TriplesRDD = {
+    val triples = sc.textFile(path)
+      .filter(line => !line.trim().isEmpty & !line.startsWith("#"))
+      .map { line =>
+        val triples = RiotReader.createIteratorTriples(new ByteArrayInputStream(line.getBytes), Lang.NTRIPLES, "http://example/base").next
+        Triples(triples.getSubject(), triples.getPredicate(), triples.getObject())
+      }
+    TriplesRDD(triples)
   }
 
   def loadSFromFile(path: String, sc: SparkContext, minPartitions: Int = 2): RDD[(String, String, String)] = {
