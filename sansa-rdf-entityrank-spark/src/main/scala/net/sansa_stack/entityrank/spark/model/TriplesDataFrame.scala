@@ -1,19 +1,17 @@
-package net.sansa_stack.entityrank.spark.utils
+package net.sansa_stack.entityrank.spark.model
 
 import org.apache.spark.ml.feature._
-import org.apache.spark.mllib.linalg.Vector
-import org.apache.spark.rdd.RDD
 import org.apache.spark.sql.DataFrame
-import org.apache.spark.SparkContext
 import org.apache.spark.sql.DataFrame
 import org.apache.spark.sql.functions._
 import org.apache.spark.sql.SparkSession
+import scala.reflect.runtime.universe
 
 /*
  * Gezim Sejdiu
  * Methods for pipeline transformations over DataFrames.
  */
-object PipelineTransformations {
+object TriplesDataFrame {
 
   def transfromEntities(df: DataFrame, colName: String, n_gramConst: Int = 3, numTextFeatures: Int = 1000)(implicit config: SparkSession): DataFrame = {
 
