@@ -19,7 +19,7 @@ import org.openjena.riot.Lang
 import org.apache.spark.storage.StorageLevel
 import net.sansa_stack.entityrank.spark.utils._
 import net.sansa_stack.entityrank.spark.io.TripleReader
-import net.sansa_stack.entityrank.spark.model.EntityRank
+import net.sansa_stack.entityrank.spark.ranking.EntityRank
 import scopt.OptionParser
 import org.apache.spark.mllib.linalg.Vector
 import org.apache.spark.sql.SQLContext
@@ -30,6 +30,7 @@ import org.apache.spark.ml.feature.Word2Vec
 import org.apache.spark.sql.SparkSession
 import net.sansa_stack.entityrank.spark.model.TriplesRDD
 import org.apache.log4j.{Level,LogManager}
+import net.sansa_stack.entityrank.spark.model.TriplesDataFrame
 
 object App extends Logging {
 
@@ -97,7 +98,7 @@ object App extends Logging {
     result.select("result").take(3).foreach(println)
 
     val syn = model.findSynonyms("Spark", 3)
-    val trans = PipelineTransformations.transfromEntities(documentDF, "words")(sparkSession)
+    val trans = TriplesDataFrame.transfromEntities(documentDF, "words")(sparkSession)
     // val toc = PipelineTransformations.tokenize(documentDF, "words", "result")
 
     trans.collect().foreach(println(_))

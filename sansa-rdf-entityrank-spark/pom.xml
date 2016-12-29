@@ -137,6 +137,13 @@
 			<artifactId>sansa-rdf-spark-bundle</artifactId>
 			<version>0.1.0</version>
 		</dependency> -->
+		
+	   <!-- stanford.nlp -->
+	   <dependency>
+			<groupId>edu.stanford.nlp</groupId>
+			<artifactId>stanford-corenlp</artifactId>
+			<version>3.6.0</version>
+		</dependency>
 
 	</dependencies>
 

@@ -71,20 +71,17 @@ case class TriplesRDD(triples: RDD[Triples]) {
   def toLiteral = (n: Node) => n match { case l: Node_Literal => l }
   def isLanguage(lang: String) = (l: Node_Literal) => l.getLiteralLanguage match { case `lang` => true; case _ => false }
 
-  def typeJoin = {
-    getTriples.cache()
-    val typePair = getTriples
-      .filter { case Triples(sub, pred, obj) => RDF.`type`.equals(pred.toString()) }
-      .map { case Triples(sub, pred, obj) => (sub, obj) }
+  def typePair() = getTriples
+    .filter { case Triples(sub, pred, obj) => RDF.`type`.equals(pred.toString()) }
+    .map { case Triples(sub, pred, obj) => (sub, obj) }
 
-    val predPair = getTriples
-      .filter { case Triples(sub, pred, obj) => !RDF.`type`.equals(pred.toString()) }
-      .map { case Triples(sub, pred, obj) => (sub, pred) }
+  def predPair() = getTriples
+    .filter { case Triples(sub, pred, obj) => !RDF.`type`.equals(pred.toString()) }
+    .map { case Triples(sub, pred, obj) => (sub, pred) }
 
-    typePair
-      .join(predPair)
-      .map { case (k, v) => v }
-      .groupByKey()
-  }
+  def typeJoin() = typePair
+    .join(predPair)
+    .map { case (k, v) => v }
+    .groupByKey()
 
 }
