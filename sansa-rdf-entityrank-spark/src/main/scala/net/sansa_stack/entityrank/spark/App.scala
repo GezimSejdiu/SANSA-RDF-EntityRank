@@ -29,8 +29,8 @@ import org.apache.spark.mllib.stat.{ MultivariateStatisticalSummary, Statistics 
 import org.apache.spark.ml.feature.Word2Vec
 import org.apache.spark.sql.SparkSession
 import net.sansa_stack.entityrank.spark.model.TriplesRDD
-import org.apache.log4j.{Level,LogManager}
-import net.sansa_stack.entityrank.spark.model.TriplesDataFrame
+import org.apache.log4j.{ Level, LogManager }
+import net.sansa_stack.entityrank.spark.model.TriplesDataFrame._
 
 object App extends Logging {
 
@@ -43,10 +43,10 @@ object App extends Logging {
     }
 
     val input = args(0)
-    
+
     LogManager.getRootLogger().setLevel(Level.WARN)
 
-    val sparkSession = SparkSession.builder
+    val spark = SparkSession.builder
       .master("local[*]")
       .config("spark.serializer", "org.apache.spark.serializer.KryoSerializer")
       .appName("Triple reader example (" + input + ")")
@@ -57,9 +57,9 @@ object App extends Logging {
     logger.info("Runing SANSA RDF-EntityRank....")
     val startTime = System.currentTimeMillis()
 
-    val triples = TripleReader.loadFromFile(input, sparkSession.sparkContext, 2) //.toDF("Subject", "Predicate", "Object")
+    val triples = TripleReader.loadFromFile(input, spark, 2) //.toDF("Subject", "Predicate", "Object")
 
-    val triplesRDD = TripleReader.loadFromFile(input, sparkSession.sparkContext)
+    val triplesRDD = TripleReader.loadFromFile(input, spark)
     val jpinPair = triplesRDD.typeJoin
     jpinPair.collect.take(3).foreach(println(_))
 
@@ -80,7 +80,7 @@ object App extends Logging {
     tf.take(3).foreach(println(_))
 
     tfidf.take(3).foreach(println(_))
-    import sparkSession.sqlContext.implicits._
+    import spark.implicits._
 
     //val DFtriples = triples.toDF("words")
     val s = vtriples.map(Tuple1.apply).toDF("words")
@@ -98,12 +98,12 @@ object App extends Logging {
     result.select("result").take(3).foreach(println)
 
     val syn = model.findSynonyms("Spark", 3)
-    val trans = TriplesDataFrame.transfromEntities(documentDF, "words")(sparkSession)
+    val trans = transfromEntities(documentDF, "words", 3, 100000)
     // val toc = PipelineTransformations.tokenize(documentDF, "words", "result")
 
     trans.collect().foreach(println(_))
 
-    sparkSession.stop()
+    spark.stop()
   }
 
 } 

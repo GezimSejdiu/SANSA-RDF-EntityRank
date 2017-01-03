@@ -2,7 +2,7 @@ package net.sansa_stack.entityrank.spark.io
 
 import org.openjena.riot.RiotReader
 import org.openjena.riot.Lang
-import org.apache.spark.SparkContext
+import org.apache.spark.sql.SparkSession
 import java.io.InputStream
 import org.apache.spark.rdd.RDD
 import net.sansa_stack.entityrank.spark.utils.Logging
@@ -23,17 +23,17 @@ object TripleReader extends Logging {
     Triples(triples.getSubject(), triples.getPredicate(), triples.getObject())
   }
 
-  def loadFromFile(path: String, sc: SparkContext, minPartitions: Int = 2): RDD[Triples] = {
+  def loadFromFile(path: String, spark: SparkSession, minPartitions: Int = 2): RDD[Triples] = {
 
     val triples =
-      sc.textFile(path) //, minPartitions) seems to be slower when we specify minPartitions
+      spark.sparkContext.textFile(path) //, minPartitions) seems to be slower when we specify minPartitions
         .filter(line => !line.trim().isEmpty & !line.startsWith("#"))
         .map(parseTriples)
     triples
   }
 
-  def loadFromFile(path: String, sc: SparkContext): TriplesRDD = {
-    val triples = sc.textFile(path)
+  def loadFromFile(path: String, spark: SparkSession): TriplesRDD = {
+    val triples =spark.sparkContext.textFile(path)
       .filter(line => !line.trim().isEmpty & !line.startsWith("#"))
       .map { line =>
         val triples = RiotReader.createIteratorTriples(new ByteArrayInputStream(line.getBytes), Lang.NTRIPLES, "http://example/base").next
@@ -42,12 +42,12 @@ object TripleReader extends Logging {
     TriplesRDD(triples)
   }
 
-  def loadSFromFile(path: String, sc: SparkContext, minPartitions: Int = 2): RDD[(String, String, String)] = {
+  def loadSFromFile(path: String, spark: SparkSession, minPartitions: Int = 2): RDD[(String, String, String)] = {
     logger.info("loading triples from disk...")
     val startTime = System.currentTimeMillis()
 
     val triples =
-      sc.textFile(path)
+      spark.sparkContext.textFile(path)
         .filter(line => !line.trim().isEmpty & !line.startsWith("#"))
         .map(line => line.replace(">", "").replace("<", "").split("\\s+")) // line to tokens
         .map(triple => (triple(0), triple(1), triple(2))) // tokens to triple
